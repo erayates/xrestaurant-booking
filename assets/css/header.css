@@ -1,0 +1,19 @@
+#navbar-brand {
+  font-weight: 700;
+  color: #fff;
+  font-size: x-large;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.nav-link {
+  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+#cta {
+  background-color: #d4c23d !important;
+  color: black;
+  padding: 0px 5px 0px 5px;
+}
