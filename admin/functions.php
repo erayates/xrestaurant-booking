@@ -1,4 +1,6 @@
 <?php
+include("../config/db.php");
+
 
 // Check the client whether admin or not
 function isAdmin()
@@ -9,3 +11,5 @@ function isAdmin()
         }
     }
 }
+
+// Get all users
