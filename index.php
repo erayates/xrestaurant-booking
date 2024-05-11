@@ -1,5 +1,30 @@
 <?php include_once("./includes/templates/header.php") ?>
 
+<?php
+if (isset($_GET['loginSuccess'])) {
+    echo "
+    <div class='alert alert-success alert-dismissible fade show text-center' role='alert'>
+    <strong>SUCCESS!</strong> You have logged in successfully!
+    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+      <span aria-hidden='true'>&times;</span>
+    </button>
+  </div>";
+}
+?>
+
+<?php
+if (isset($_GET['logoutSuccess'])) {
+    echo "
+    <div class='alert alert-success alert-dismissible fade show text-center' role='alert'>
+    You have logged out!
+    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+      <span aria-hidden='true'>&times;</span>
+    </button>
+  </div>";
+}
+?>
+
+
 <section class="hero px-3" style="background-image: url('assets/images/restaurant-hero-bg.jpg');">
     <div class="container h-100">
         <div class="row h-100 justify-content-md-center align-items-md-center">
