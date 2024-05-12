@@ -23,6 +23,15 @@
         </select>
     </div>
 
+    <div class="form-group ">
+        <label for="status">Status: <span class="text-danger">*</span></label>
+        <select name="status" id="status" required>
+            <option value="empty">Empty</option>
+            <option value="full">Full</option>
+        </select>
+    </div>
+
+
 
     <div class="form-group">
         <input type="submit" class="btn btn-primary" name="create_table" value="Create Table">

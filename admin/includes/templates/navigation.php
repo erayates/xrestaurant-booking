@@ -99,7 +99,7 @@
                 </ul>
             </li>
             <li class="">
-                <a href="messages.php"><i class="fa-solid fa-message"></i></i> Messages</a>
+                <a href="messages.php"><i class="fa-solid fa-message"></i> Messages</a>
             </li>
 
         </ul>

@@ -84,13 +84,15 @@ if (isset($_POST['create_table'])) {
     $table_name = $_POST['name'];
     $table_description = $_POST['description'];
     $table_capacity = $_POST['capacity'];
+    $table_status = $_POST['status'];
 
     $name = escape($table_name);
     $description = escape($table_description);
     $capacity = escape($table_capacity);
+    $status = escape($table_status);
 
-    $query = "INSERT INTO tables(name,description,capacity)";
-    $query .= "VALUES('{$name}','{$description}','{$capacity}')";
+    $query = "INSERT INTO tables(name,description,capacity, status)";
+    $query .= "VALUES('{$name}','{$description}','{$capacity}', '{$status}')";
     $create_table_query = mysqli_query($conn, $query);
     if ($create_table_query) {
         header("Location: tables.php?addSuccess");

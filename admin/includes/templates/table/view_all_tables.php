@@ -6,6 +6,7 @@
                 <th scope="col">Name</th>
                 <th scope="col">Description</th>
                 <th scope="col">Capacity</th>
+                <th scope="col">Status</th>
                 <th scope="col"></th>
             </tr>
         </thead>
@@ -19,6 +20,7 @@
                 $name = htmlspecialchars($row['name']);
                 $description = htmlspecialchars($row['description']);
                 $capacity = htmlspecialchars($row['capacity']);
+                $status = htmlspecialchars($row['status']);
             ?>
 
 
@@ -27,6 +29,13 @@
                     <td><?php echo $name ?></td>
                     <td><?php echo $description ?></td>
                     <td><?php echo $capacity ?></td>
+                    <td><?php if ($status === "empty") { ?>
+                            <span class='badge' style="background-color: blue;">Empty</span>
+                        <?php } elseif ($status === "full") { ?>
+                            <span class='badge' style="background-color: red;">Full</span>
+                        <?php }
+                        ?>
+                    </td>
                     <td>
                         <a href="tables.php?source=edit_table&tid=<?php echo $table_id ?>" class="btn btn-primary">Edit</a>
                         <a href="tables.php?delete=<?php echo $table_id ?>" class="btn btn-danger" class="user_delete">Delete</a>

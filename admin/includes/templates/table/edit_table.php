@@ -3,15 +3,18 @@ if (isset($_POST['edit_table'])) {
     $table_name = $_POST['name'];
     $table_description = $_POST['description'];
     $table_capacity = $_POST['capacity'];
+    $table_status = $_POST['status'];
 
     $name = escape($table_name);
     $description = escape($table_description);
     $capacity = escape($table_capacity);
+    $status = escape($table_status);
 
     $query = "UPDATE tables SET ";
     $query .= "name = '{$name}', ";
     $query .= "description = '{$description}', ";
-    $query .= "capacity = '{$capacity}' ";
+    $query .= "capacity = '{$capacity}', ";
+    $query .= "status = '{$status}' ";
     $query .= "WHERE table_id = {$_GET['tid']}";
 
     $update_client = mysqli_query($conn, $query);
@@ -31,6 +34,7 @@ if (isset($_GET['tid'])) {
         $name = htmlspecialchars($row['name']);
         $description = htmlspecialchars($row['description']);
         $capacity = htmlspecialchars($row['capacity']);
+        $status = htmlspecialchars($row['status']);
 
 ?>
         <form method="POST" action="" enctype="multipart/form-data">
@@ -57,6 +61,16 @@ if (isset($_GET['tid'])) {
                     <option value=8 <?php if ($capacity == 8) echo "selected" ?>>8</option>
                 </select>
             </div>
+
+
+            <div class="form-group ">
+                <label for="status">Status: <span class="text-danger">*</span></label>
+                <select name="status" id="status" required>
+                    <option value="empty">Empty</option>
+                    <option value="full">Full</option>
+                </select>
+            </div>
+
 
 
             <div class="form-group">

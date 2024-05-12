@@ -21,11 +21,11 @@ $category_count = 8;
                     </div>
                     <div class="col-xs-9 text-right">
                         <div class='huge'><?php echo $post_count ?></div>
-                        <div>Posts</div>
+                        <div>Reservations</div>
                     </div>
                 </div>
             </div>
-            <a href="posts.php">
+            <a href="reservations.php">
                 <div class="panel-footer">
                     <span class="pull-left">View Details</span>
                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -43,11 +43,11 @@ $category_count = 8;
                     </div>
                     <div class="col-xs-9 text-right">
                         <div class='huge'><?php echo $comment_count ?></div>
-                        <div>Comments</div>
+                        <div>Messages</div>
                     </div>
                 </div>
             </div>
-            <a href="comments.php">
+            <a href="messages.php">
                 <div class="panel-footer">
                     <span class="pull-left">View Details</span>
                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -65,11 +65,11 @@ $category_count = 8;
                     </div>
                     <div class="col-xs-9 text-right">
                         <div class='huge'><?php echo $user_count ?></div>
-                        <div> Users</div>
+                        <div> Clients</div>
                     </div>
                 </div>
             </div>
-            <a href="users.php">
+            <a href="clients.php">
                 <div class="panel-footer">
                     <span class="pull-left">View Details</span>
                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -87,11 +87,11 @@ $category_count = 8;
                     </div>
                     <div class="col-xs-9 text-right">
                         <div class='huge'><?php echo $category_count ?></div>
-                        <div>Categories</div>
+                        <div>Menu</div>
                     </div>
                 </div>
             </div>
-            <a href="categories.php">
+            <a href="menu.php">
                 <div class="panel-footer">
                     <span class="pull-left">View Details</span>
                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
