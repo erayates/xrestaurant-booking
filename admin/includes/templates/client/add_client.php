@@ -6,22 +6,22 @@ if (isset($_GET['addClientFailed'])) {
 
 <form method="POST" action="functions.php" enctype="multipart/form-data">
     <div class="form-group">
-        <label for="firstName">Firstname:</label>
+        <label for="firstName">Firstname: <span class="text-danger">*</span></label>
         <input type="text" class="form-control" name="firstName" id="firstName" required>
     </div>
 
     <div class="form-group">
-        <label for="lastName">Lastname:</label>
+        <label for="lastName">Lastname: <span class="text-danger">*</span></label>
         <input type="text" class="form-control" name="lastName" id="lastName" required>
     </div>
 
     <div class="form-group">
-        <label for="password">Password:</label>
+        <label for="password">Password: <span class="text-danger">*</span></label>
         <input type="password" class="form-control" name="password" id="password" required>
     </div>
 
     <div class="form-group">
-        <label for="email">Email:</label>
+        <label for="email">Email: <span class="text-danger">*</span></label>
         <input type="email" class="form-control" name="email" id="email" required>
     </div>
 
@@ -33,7 +33,7 @@ if (isset($_GET['addClientFailed'])) {
 
 
     <div class="form-group ">
-        <label for="role">Role:</label>
+        <label for="role">Role: <span class="text-danger">*</span></label>
         <select name="role" id="role" required>
             <option value="admin">Admin</option>
             <option value="client">Client</option>

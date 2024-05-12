@@ -5,8 +5,8 @@ include("../config/db.php");
 // Check the client whether admin or not
 function isAdmin()
 {
-    if (isset($_SESSION['user_role'])) {
-        if (isset($_SESSION['user_role']) == 'admin') {
+    if (isset($_SESSION['role'])) {
+        if (isset($_SESSION['role']) == 'admin') {
             return true;
         }
     }
@@ -38,42 +38,17 @@ function isUserExists($email)
 }
 
 
-// Edit Client
-if (isset($_POST['edit_client'])) {
-    if (isUserExists($_POST['email'])) {
-        header("Location: clients.php?source=edit_client&uid={$client_id}&editClientFailed");
+function confirmQuery($result)
+{
+    global $conn;
+    if (!$result) {
+        die("QUERY FAILED" . mysqli_error($conn));
     }
-
-    $client_password = password_hash($_POST['password'], PASSWORD_BCRYPT, array('cost' => 12));
-    $client_firstname = $_POST['firstName'];
-    $client_lastname = $_POST['lastName'];
-    $client_phone = $_POST['phone'];
-    $client_email = $_POST['email'];
-    $client_role = $_POST['role'];
-
-    $firstName = escape($client_firstname);
-    $lastName = escape($client_lastname);
-    $email = escape($client_email);
-    $phone = escape($client_phone);
-    $role = escape($client_role);
-
-    $query = "UPDATE clients SET ";
-    $query .= "password = '{$client_password}', ";
-    $query .= "firstName = '{$firstName}', ";
-    $query .= "lastName = '{$lastName}', ";
-    $query .= "email = '{$email}', ";
-    $query .= "phone = '{$phone}', ";
-    $query .= "role = '{$role}' ";
-    $query .= "WHERE client_id = {$_GET['uid']}";
-
-    $update_client = mysqli_query($conn, $query);
-    if (confirmQuery($update_client)) {
-        header("Location: clients.php?updateSuccess");
-    }
+    return true;
 }
 
 
-// Create Client
+// Create A New Client
 if (isset($_POST['create_client'])) {
     if (isUserExists($_POST['email'])) {
         header("Location: clients.php?source=add_client&addClientFailed");
@@ -99,5 +74,25 @@ if (isset($_POST['create_client'])) {
 
     if ($create_client_query) {
         header("Location: clients.php?addSuccess");
+    }
+}
+
+
+// Create A New Table
+if (isset($_POST['create_table'])) {
+    // admin check yap.
+    $table_name = $_POST['name'];
+    $table_description = $_POST['description'];
+    $table_capacity = $_POST['capacity'];
+
+    $name = escape($table_name);
+    $description = escape($table_description);
+    $capacity = escape($table_capacity);
+
+    $query = "INSERT INTO tables(name,description,capacity)";
+    $query .= "VALUES('{$name}','{$description}','{$capacity}')";
+    $create_table_query = mysqli_query($conn, $query);
+    if ($create_table_query) {
+        header("Location: tables.php?addSuccess");
     }
 }

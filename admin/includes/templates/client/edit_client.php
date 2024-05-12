@@ -1,24 +1,50 @@
 <?php
-function confirmQuery($result)
-{
-    global $conn;
-    if (!$result) {
-        die("QUERY FAILED" . mysqli_error($conn));
+if (isset($_POST['edit_client'])) {
+    if (isUserExists($_POST['email'])) {
+        header("Location: clients.php?source=edit_client&uid={$client_id}&editClientFailed");
     }
-    return true;
-}
 
+    $client_password = password_hash($_POST['password'], PASSWORD_BCRYPT, array('cost' => 12));
+    $client_firstname = $_POST['firstName'];
+    $client_lastname = $_POST['lastName'];
+    $client_phone = $_POST['phone'];
+    $client_email = $_POST['email'];
+    $client_role = $_POST['role'];
+
+    $firstName = escape($client_firstname);
+    $lastName = escape($client_lastname);
+    $email = escape($client_email);
+    $phone = escape($client_phone);
+    $role = escape($client_role);
+
+    $query = "UPDATE clients SET ";
+    $query .= "password = '{$client_password}', ";
+    $query .= "firstName = '{$firstName}', ";
+    $query .= "lastName = '{$lastName}', ";
+    $query .= "email = '{$email}', ";
+    $query .= "phone = '{$phone}', ";
+    $query .= "role = '{$role}' ";
+    $query .= "WHERE client_id = {$_GET['uid']}";
+
+    $update_client = mysqli_query($conn, $query);
+    if (confirmQuery($update_client)) {
+        header("Location: clients.php?updateSuccess");
+    }
+}
+?>
+
+<?php
 if (isset($_GET['uid'])) {
     $query = "SELECT * FROM clients WHERE client_id = {$_GET['uid']}";
     $get_client = mysqli_query($conn, $query);
     confirmQuery($get_client);
     while ($row = mysqli_fetch_assoc($get_client)) {
-        $client_id = $row['client_id'];
-        $firstName = $row['firstName'];
-        $lastName = $row['lastName'];
-        $email = $row['email'];
-        $phone = $row['phone'];
-        $role = $row['role'];
+        $client_id = htmlspecialchars($row['client_id']);
+        $firstName = htmlspecialchars($row['firstName']);
+        $lastName = htmlspecialchars($row['lastName']);
+        $email = htmlspecialchars($row['email']);
+        $phone = htmlspecialchars($row['phone']);
+        $role = htmlspecialchars($row['role']);
 
 ?>
         <?php
@@ -27,7 +53,7 @@ if (isset($_GET['uid'])) {
         }
         ?>
 
-        <form method="POST" action="functions.php" enctype="multipart/form-data">
+        <form method="POST" action="" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="firstName">Firstname:</label>
                 <input type="text" class="form-control" name="firstName" id="firstName" value=<?php echo $firstName ?>>
