@@ -31,8 +31,6 @@
         </select>
     </div>
 
-
-
     <div class="form-group">
         <input type="submit" class="btn btn-primary" name="create_table" value="Create Table">
     </div>
