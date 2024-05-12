@@ -62,7 +62,15 @@
             </li>
 
             <li>
-                <a href="clients.php"><i class="fa-solid fa-user"></i> Clients</a>
+                <a href="#" data-toggle="collapse" data-target="#clients_dropdown"><i class="fa-solid fa-registered"></i> Clients <i class="fa fa-fw fa-caret-down"></i></a>
+                <ul id="clients_dropdown" class="collapse">
+                    <li>
+                        <a href="clients.php"><i class="fa-solid fa-eye"></i> View All Clients</a>
+                    </li>
+                    <li>
+                        <a href="clients.php?source=add_client"><i class="fa-solid fa-plus"></i> Add Client</a>
+                    </li>
+                </ul>
             </li>
             <li>
                 <a href="clients.php"> <i class="fa-solid fa-menorah"></i> Menu</a>

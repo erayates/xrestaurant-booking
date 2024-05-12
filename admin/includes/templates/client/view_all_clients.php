@@ -1,7 +1,7 @@
 <?php
 if (isset($_GET['deleteSuccess'])) { ?>
     <div class="alert alert-danger col-xs-12" role="alert">
-        <strong>SUCCESSFULL!</strong> You have deleted a user successfully.
+        <strong>SUCCESSFULL!</strong> You have deleted a client successfully.
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true" style="color:red;">&times;</span>
         </button>
@@ -12,7 +12,7 @@ if (isset($_GET['deleteSuccess'])) { ?>
 <?php
 if (isset($_GET['updateSuccess'])) { ?>
     <div class="alert alert-danger col-xs-12" role="alert">
-        <strong>SUCCESSFULL!</strong> You updated the user successfully.
+        <strong>SUCCESSFULL!</strong> You have updated a client successfully.
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true" style="color:red;">&times;</span>
         </button>
@@ -20,7 +20,19 @@ if (isset($_GET['updateSuccess'])) { ?>
 <?php }
 ?>
 
-<div class="col-xs-12">
+
+<?php
+if (isset($_GET['addSuccess'])) { ?>
+    <div class="alert alert-danger col-xs-12" role="alert">
+        <strong>SUCCESSFULL!</strong> You have added a client successfully.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true" style="color:red;">&times;</span>
+        </button>
+    </div>
+<?php }
+?>
+
+<div class="col-xs-12" style="overflow-x: auto;">
     <table class="table ">
         <thead>
             <tr>
@@ -57,7 +69,7 @@ if (isset($_GET['updateSuccess'])) { ?>
                     <td><?php echo $phone ?></td>
                     <td><?php echo $role ?></td>
                     <td>
-                        <a href="clients.php?source=edit_user&uid=<?php echo $client_id ?>" class="btn btn-primary">Edit</a>
+                        <a href="clients.php?source=edit_client&uid=<?php echo $client_id ?>" class="btn btn-primary">Edit</a>
                         <a href="clients.php?delete=<?php echo $client_id ?>" class="btn btn-danger" class="user_delete">Delete</a>
                     </td>
 
@@ -67,13 +79,12 @@ if (isset($_GET['updateSuccess'])) { ?>
             ?>
 
             <?php
-            if (isAdmin()) {
-                if (isset($_GET['delete'])) {
-                    $deleted_user_id = $_GET['delete'];
-                    $query = "DELETE FROM users WHERE user_id = {$deleted_user_id}";
-                    $delete_query = mysqli_query($conn, $query);
-                    header("Location: clients.php?deleteSuccess");
-                }
+            if (isset($_GET['delete'])) {
+                // isAdmin kontrolü tekrar eklenmeli
+                $deleted_user_id = $_GET['delete'];
+                $query = "DELETE FROM clients WHERE client_id = {$deleted_user_id}";
+                $delete_query = mysqli_query($conn, $query);
+                header("Location: clients.php?deleteSuccess");
             }
 
             ?>

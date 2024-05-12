@@ -5,6 +5,7 @@ function confirmQuery($result)
     if (!$result) {
         die("QUERY FAILED" . mysqli_error($conn));
     }
+    return true;
 }
 
 if (isset($_GET['uid'])) {
@@ -43,13 +44,13 @@ if (isset($_GET['uid'])) {
             </div>
 
 
-            <div class="col-12 mb-4">
+            <div class="form-group">
                 <label for="phone" class="form-label">Phone <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" name="phone" id="phone" pattern="[0][0-9]{10}" placeholder="05XXXXXXXXX" required>
+                <input type="text" class="form-control" name="phone" id="phone" pattern="[0][0-9]{10}" placeholder="05XXXXXXXXX" value=<?php echo $phone ?> required>
             </div>
 
 
-            <div class="form-group">
+            <div class="form-group ">
                 <label for="role">Role:</label>
                 <select name="role" id="role">
                     <option value="admin">Admin</option>
@@ -58,7 +59,7 @@ if (isset($_GET['uid'])) {
             </div>
 
             <div class="form-group">
-                <input type="submit" class="btn btn-primary" name="edit_user" value="Edit User">
+                <input type="submit" class="btn btn-primary" name="edit_client" value="Edit Client">
             </div>
 
         </form>
@@ -68,7 +69,7 @@ if (isset($_GET['uid'])) {
 ?>
 
 <?php
-if (isset($_POST['edit_user'])) {
+if (isset($_POST['edit_client'])) {
     $user_password = password_hash($_POST['password'], PASSWORD_BCRYPT, array('cost' => 12));
     $user_firstname = $_POST['firstName'];
     $user_lastname = $_POST['lastName'];
@@ -82,11 +83,12 @@ if (isset($_POST['edit_user'])) {
     $query .= "lastName = '{$user_lastname}', ";
     $query .= "email = '{$user_email}', ";
     $query .= "phone = '{$user_phone}', ";
-    $query .= "role = '{$user_role}', ";
+    $query .= "role = '{$user_role}' ";
     $query .= "WHERE client_id = {$_GET['uid']}";
 
     $update_user = mysqli_query($conn, $query);
-    confirmQuery($update_user);
+    if (confirmQuery($update_user)) {
+        header("Location: clients.php?updateSuccess");
+    }
 }
-
 ?>

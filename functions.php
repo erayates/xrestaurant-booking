@@ -87,7 +87,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $query = "SELECT * FROM clients WHERE email = '{$email}'";
             $result = mysqli_query($conn, $query);
 
-            // Check if the query was successful
             if ($result) {
                 $row = mysqli_fetch_assoc($result);
                 if ($row) {
@@ -105,7 +104,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     exit();
                 }
             } else {
-                // Handle query failure
                 header("Location: sign-in.php?loginFailed");
                 exit();
             }

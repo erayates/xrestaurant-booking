@@ -1,4 +1,5 @@
 <?php include_once("includes/templates/header.php") ?>
+
 <div id="wrapper">
     <?php include("includes/templates/navigation.php") ?>
     <div id="page-wrapper">
@@ -23,10 +24,10 @@
                         $source = '';
                     }
                     switch ($source) {
-                        case 'add_user':
+                        case 'add_client':
                             include './includes/templates/client/add_client.php';
                             break;
-                        case 'edit_user':
+                        case 'edit_client':
                             include './includes/templates/client/edit_client.php';
                             break;
                         default:
