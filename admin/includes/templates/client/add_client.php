@@ -1,24 +1,10 @@
 <?php
-if (isset($_POST['create_client'])) {
-    $client_password = password_hash($_POST['password'], PASSWORD_BCRYPT, array('cost' => 12));
-    $client_firstname = $_POST['firstName'];
-    $client_lastname = $_POST['lastName'];
-    $client_email = $_POST['email'];
-    $client_role = $_POST['role'];
-    $client_phone = $_POST['phone'];
-
-    $query = "INSERT INTO clients(password,firstName,lastName,email,role,phone)";
-    $query .= "VALUES('{$client_password}','{$client_firstname}','{$client_lastname}','{$client_email}','{$client_role}','{$client_phone}')";
-    $create_client_query = mysqli_query($conn, $query);
-
-    if ($create_client_query) {
-        header("Location: clients.php?addSuccess");
-    }
+if (isset($_GET['addClientFailed'])) {
+    echo "<span class='text-danger mb-4'>Email already in used.</span>";
 }
 ?>
 
-
-<form method="POST" action="" enctype="multipart/form-data">
+<form method="POST" action="functions.php" enctype="multipart/form-data">
     <div class="form-group">
         <label for="firstName">Firstname:</label>
         <input type="text" class="form-control" name="firstName" id="firstName" required>

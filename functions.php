@@ -1,28 +1,23 @@
 <?php
 include("./config/db.php");
 
-// Escape string
 function escape($string)
 {
     global $conn;
     return mysqli_real_escape_string($conn, trim($string));
 }
 
-// Is User Exits Functions
-// Is User Exits Function
 function isUserExists($email)
 {
     global $conn;
-    // Add single quotes around the email value in the SQL query
-    $query = "SELECT * FROM clients WHERE email = '{$email}'";
+    $sanitized_email = escape($email);
+    $query = "SELECT * FROM clients WHERE email = '{$sanitized_email}'";
     $select_query = mysqli_query($conn, $query);
 
-    // Check if the query executed successfully
     if (!$select_query) {
         die("Query failed: " . mysqli_error($conn));
     }
 
-    // Check if a user with the given email exists
     if (mysqli_num_rows($select_query) > 0) {
         return true;
     } else {

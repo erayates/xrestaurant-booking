@@ -51,18 +51,17 @@ if (isset($_GET['addSuccess'])) { ?>
             $query = "SELECT * FROM clients";
             $get_all_users = mysqli_query($conn, $query);
             while ($row = mysqli_fetch_assoc($get_all_users)) {
-                $client_id = $row['client_id'];
-                $firstName = $row['firstName'];
-                $lastName = $row['lastName'];
-                $role = $row['role'];
-                $phone = $row['phone'];
-                $email = $row['email'];
+                $client_id = htmlspecialchars($row['client_id']);
+                $firstName = htmlspecialchars($row['firstName']);
+                $lastName = htmlspecialchars($row['lastName']);
+                $role = htmlspecialchars($row['role']);
+                $phone = htmlspecialchars($row['phone']);
+                $email = htmlspecialchars($row['email']);
             ?>
 
 
                 <tr>
                     <th scope="row"><?php echo $client_id ?></th>
-                    <td><?php echo $client_id ?></td>
                     <td><?php echo $firstName ?></td>
                     <td><?php echo $lastName ?></td>
                     <td><?php echo $email ?></td>

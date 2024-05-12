@@ -10,9 +10,9 @@ function confirmQuery($result)
 
 if (isset($_GET['uid'])) {
     $query = "SELECT * FROM clients WHERE client_id = {$_GET['uid']}";
-    $get_user = mysqli_query($conn, $query);
-    confirmQuery($get_user);
-    while ($row = mysqli_fetch_assoc($get_user)) {
+    $get_client = mysqli_query($conn, $query);
+    confirmQuery($get_client);
+    while ($row = mysqli_fetch_assoc($get_client)) {
         $client_id = $row['client_id'];
         $firstName = $row['firstName'];
         $lastName = $row['lastName'];
@@ -21,8 +21,13 @@ if (isset($_GET['uid'])) {
         $role = $row['role'];
 
 ?>
+        <?php
+        if (isset($_GET['editClientField'])) {
+            echo "<span class='text-danger mb-4'>Email already in used.</span>";
+        }
+        ?>
 
-        <form method="POST" action="" enctype="multipart/form-data">
+        <form method="POST" action="functions.php" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="firstName">Firstname:</label>
                 <input type="text" class="form-control" name="firstName" id="firstName" value=<?php echo $firstName ?>>
@@ -65,30 +70,5 @@ if (isset($_GET['uid'])) {
         </form>
 
 <?php }
-}
-?>
-
-<?php
-if (isset($_POST['edit_client'])) {
-    $user_password = password_hash($_POST['password'], PASSWORD_BCRYPT, array('cost' => 12));
-    $user_firstname = $_POST['firstName'];
-    $user_lastname = $_POST['lastName'];
-    $user_phone = $_POST['phone'];
-    $user_email = $_POST['email'];
-    $user_role = $_POST['role'];
-
-    $query = "UPDATE clients SET ";
-    $query .= "password = '{$user_password}', ";
-    $query .= "firstName = '{$user_firstname}', ";
-    $query .= "lastName = '{$user_lastname}', ";
-    $query .= "email = '{$user_email}', ";
-    $query .= "phone = '{$user_phone}', ";
-    $query .= "role = '{$user_role}' ";
-    $query .= "WHERE client_id = {$_GET['uid']}";
-
-    $update_user = mysqli_query($conn, $query);
-    if (confirmQuery($update_user)) {
-        header("Location: clients.php?updateSuccess");
-    }
 }
 ?>
