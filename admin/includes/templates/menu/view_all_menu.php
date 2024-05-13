@@ -59,8 +59,6 @@ if (isset($_GET['addSuccess'])) { ?>
                 $image = htmlspecialchars($row['image']);
 
             ?>
-
-
                 <tr>
                     <th scope="row"><?php echo $item_id ?></th>
                     <td><img src="/xrestaurant-booking/assets/images/menu/<?php echo $image ?>" width="100" /></td>

@@ -11,9 +11,9 @@
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item actives"><a href="index.php" class="nav-link">Home</a></li>
                     <li class="nav-item"><a href="about-us.php" class="nav-link">About Us</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link">Menu</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link">Contact Us</a></li>
-                    <li class="nav-item" id="cta"><a href="#" class="nav-link">Book a table</a></li>
+                    <li class="nav-item"><a href="menu.php" class="nav-link">Menu</a></li>
+                    <li class="nav-item"><a href="contact.php" class="nav-link">Contact Us</a></li>
+                    <li class="nav-item" id="cta"><a href="reservation.php" class="nav-link">Book a table</a></li>
                     <li class="nav-item">
                         <?php
                         if (isset($_SESSION['email'])) {
