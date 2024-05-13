@@ -9,7 +9,7 @@
 <section class="section--space">
     <div class="container row mx-auto">
         <div class="about-us-left col-12 col-md-6">
-            <img src="assets/images/about-us-photo.jpg" class="w-100 rounded"/>
+            <img src="assets/images/about-us-photo.jpg" class="w-100 rounded" />
         </div>
         <div class="col-12 col-md-6">
             asdasd
