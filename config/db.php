@@ -1,6 +1,6 @@
 <?php
 
-$db['db_host'] = 'localhost';
+$db['db_host'] = '127.0.0.1';
 $db['db_user'] = 'root';
 $db['db_pwd'] = '';
 $db['db_name'] = 'xresto';

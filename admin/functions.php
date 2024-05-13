@@ -72,7 +72,7 @@ if (isset($_POST['create_client'])) {
     $query .= "VALUES('{$client_password}','{$firstName}','{$lastName}','{$email}','{$role}','{$phone}')";
     $create_client_query = mysqli_query($conn, $query);
 
-    if ($create_client_query) {
+    if (confirmQuery($create_client_query)) {
         header("Location: clients.php?addSuccess");
     }
 }
@@ -94,7 +94,41 @@ if (isset($_POST['create_table'])) {
     $query = "INSERT INTO tables(name,description,capacity, status)";
     $query .= "VALUES('{$name}','{$description}','{$capacity}', '{$status}')";
     $create_table_query = mysqli_query($conn, $query);
-    if ($create_table_query) {
+    if (confirmQuery($create_table_query)) {
         header("Location: tables.php?addSuccess");
+    }
+}
+
+
+// Create A New Menu Item
+if (isset($_POST['create_menu_item'])) {
+    $item_name = $_POST['name'];
+    $item_description = $_POST['description'];
+    $item_price = $_POST['price'];
+    $item_category = $_POST['category'];
+    $item_image = $_FILES['image']['name'];
+    $item_image_temp = $_FILES['image']['tmp_name'];
+
+    $name = escape($item_name);
+    $description = escape($item_description);
+    $price = escape($item_price);
+    $category = escape($item_category);
+
+    if ($_FILES['image']['error'] !== UPLOAD_ERR_OK) {
+        // Handle the error
+        echo "File upload failed with error code: {$_FILES['image']['error']}";
+    }
+
+    $upload_directory = $_SERVER['DOCUMENT_ROOT'] . "/xrestaurant-booking/assets/images/menu/";
+    move_uploaded_file($item_image_temp, $upload_directory . $item_image);
+
+    $query = "INSERT INTO menu (name, description, price, category, image) ";
+    $query .= "VALUES ('{$name}', '{$description}', '{$price}', '{$category}', '{$item_image}')";
+
+    $create_menu_query = mysqli_query($conn, $query);
+
+    if (confirmQuery($create_menu_query)) {
+        header("Location: menu.php?addSuccess");
+        exit();
     }
 }

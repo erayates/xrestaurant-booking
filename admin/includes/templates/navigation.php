@@ -72,8 +72,17 @@
                     </li>
                 </ul>
             </li>
+
             <li>
-                <a href="clients.php"> <i class="fa-solid fa-menorah"></i> Menu</a>
+                <a href="#" data-toggle="collapse" data-target="#menu_dropdown"><i class="fa-solid fa-menorah"></i> Menu <i class="fa fa-fw fa-caret-down"></i></a>
+                <ul id="menu_dropdown" class="collapse">
+                    <li>
+                        <a href="menu.php"><i class="fa-solid fa-eye"></i> View All Menu</a>
+                    </li>
+                    <li>
+                        <a href="menu.php?source=add_menu_item"><i class="fa-solid fa-plus"></i> Add Menu Item</a>
+                    </li>
+                </ul>
             </li>
 
             <li>
