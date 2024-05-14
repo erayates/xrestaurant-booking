@@ -126,11 +126,33 @@
             <?php
             if (isset($_GET['delete'])) {
                 if (isAdmin()) {
-                    $deleted_reservation_id = $_GET['delete'];
-                    $query = "DELETE FROM reservations WHERE reservation_id = {$deleted_reservation_id}";
-                    $delete_query = mysqli_query($conn, $query);
-                    if ($delete_query) {
-                        header("Location: reservations.php?deleteSuccess");
+                    $res_id = $_GET['delete'];
+
+                    $reservation_query = "SELECT table_id FROM reservations WHERE reservation_id = {$res_id}";
+                    $reservation_result = mysqli_query($conn, $reservation_query);
+
+                    if ($reservation_result && mysqli_num_rows($reservation_result) > 0) {
+                        $reservation = mysqli_fetch_assoc($reservation_result);
+                        $table_id = $reservation['table_id'];
+
+                        $query = "DELETE FROM reservations WHERE reservation_id = {$res_id}";
+                        $delete_query = mysqli_query($conn, $query);
+
+                        if (confirmQuery($delete_query)) {
+                            $table_query = "UPDATE tables SET status = 'empty' WHERE table_id = {$table_id}";
+                            $updated_query = mysqli_query($conn, $table_query);
+
+                            if (confirmQuery($updated_query)) {
+                                header("Location: reservations.php?deleteSuccess");
+                                exit();
+                            } else {
+                                die("Table status update failed: " . mysqli_error($conn));
+                            }
+                        } else {
+                            die("Reservation deletion failed: " . mysqli_error($conn));
+                        }
+                    } else {
+                        die("Reservation not found: " . mysqli_error($conn));
                     }
                 }
             }

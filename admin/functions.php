@@ -159,7 +159,22 @@ if (isset($_POST['create_reservation'])) {
     $query .= "VALUES('{$client_id}','{$table_id}','{$num_guests}','{$date}','{$time}','{$status}','{$message}')";
     $create_reservation_query = mysqli_query($conn, $query);
     if (confirmQuery($create_reservation_query)) {
-        header("Location: reservations.php?addSuccess");
-        exit();
+        // Rezervasyon durumu onaylanmış veya bekliyor durumda ise ilgili masanın durumu full olarak değişecek.
+        if ($status === 'approved' || $status === 'pending') {
+            $table_query = "UPDATE tables SET status = 'full' WHERE table_id = {$table_id}";
+            $update_table_query = mysqli_query($conn, $table_query);
+            if (confirmQuery($update_table_query)) {
+                header("Location: reservations.php?addSuccess");
+                exit();
+            }
+        } else {
+            // Rezervasyon durumu reddedilmişse ilgili masanın durumu empty olarak değişecek.
+            $table_query = "UPDATE tables SET status = 'empty' WHERE table_id = {$table_id}";
+            $update_table_query = mysqli_query($conn, $table_query);
+            if (confirmQuery($update_table_query)) {
+                header("Location: reservations.php?addSuccess");
+                exit();
+            }
+        }
     }
 }

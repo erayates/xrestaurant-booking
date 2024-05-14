@@ -82,8 +82,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 }
 
 // Login Logic
-
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['login'])) {
         if (!empty($_POST['email']) && !empty($_POST['password'])) {
@@ -133,7 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 // Create A Reservation
 if (isset($_POST['reservation'])) {
-    $client_id = 1;
+    $client_id = $_SESSION['user_id'];
     $table_id = $_POST['table'];
     $reservation_date = $_POST['reservation_date'];
     $reservation_time = $_POST['reservation_time'];
@@ -148,12 +146,15 @@ if (isset($_POST['reservation'])) {
     $reservation_time = escape($reservation_time);
     $num_guests = escape($num_guests);
     $message = escape($message);
-    $status = escape($status);
 
     $query = "INSERT INTO reservations (client_id, table_id, num_guests, date, time, status, message) VALUES ('$client_id', '$table_id', '$num_guests', '$reservation_date', '$reservation_time', '$status', '$message')";
     $reg_reservation = mysqli_query($conn, $query);
     if (confirmQuery($reg_reservation)) {
-        header("Location: reservation.php?reservationSuccess");
-        exit();
+        $table_query = "UPDATE tables SET status = 'full' WHERE table_id = {$table_id}";
+        $updated_query = mysqli_query($conn, $table_query);
+        if (confirmQuery($updated_query)) {
+            header("Location: reservation.php?reservationSuccess");
+            exit();
+        }
     }
 }
