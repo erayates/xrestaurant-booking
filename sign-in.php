@@ -1,5 +1,4 @@
 <?php include_once("./includes/templates/header.php") ?>
-<?php include("functions.php"); ?>
 
 <?php
 if (isset($_GET['success'])) {
@@ -14,7 +13,19 @@ if (isset($_GET['success'])) {
 ?>
 
 <?php
-if (isset($_SESSION['email'])) {
+if (isset($_GET['unauthorized'])) {
+    echo "
+    <div class='alert alert-danger alert-dismissible fade show text-center' role='alert'>
+    <strong>You don't have permission to show that page. Please login!</strong>
+    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+      <span aria-hidden='true'>&times;</span>
+    </button>
+  </div>";
+}
+?>
+
+<?php
+if (isset($_SESSION['user_email'])) {
     header("Location: index.php");
 }
 ?>
@@ -24,8 +35,6 @@ if (isset($_SESSION['email'])) {
     <div class="container">
         <div class="row">
             <div class="col-12 col-md-6 ">
-
-
                 <div class="d-flex flex-column justify-content-between h-100 p-3 p-md-4 ">
                     <h3 class="m-0">Welcome!</h3>
                     <img class="img-fluid rounded mx-auto my-4 h-100 w-100" loading="lazy" src="assets/images/restaurant-hero-bg.jpg" style="object-fit: cover;">

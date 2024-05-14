@@ -1,4 +1,6 @@
 <?php
+
+session_start();
 include("./config/db.php");
 
 function escape($string)
@@ -25,11 +27,20 @@ function isUserExists($email)
     }
 }
 
+function confirmQuery($result)
+{
+    global $conn;
+    if (!$result) {
+        die("QUERY FAILED" . mysqli_error($conn));
+    }
+    return true;
+}
 
 
 
 
-// Login Logic
+
+
 
 // Register Logic
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
@@ -70,6 +81,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     }
 }
 
+// Login Logic
+
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['login'])) {
         if (!empty($_POST['email']) && !empty($_POST['password'])) {
@@ -86,9 +100,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $row = mysqli_fetch_assoc($result);
                 if ($row) {
                     if (password_verify($password, $row['password'])) {
-                        $_SESSION['email'] = $row['email'];
-                        $_SESSION['role'] = $row['role'];
+                        $_SESSION['user_id'] = $row["client_id"];
+                        $_SESSION['user_firstname'] = $row['firstName'];
+                        $_SESSION['user_lastname'] = $row['lastName'];
+                        $_SESSION['user_phone'] = $row['phone'];
+                        $_SESSION['user_email'] = $row['email'];
+                        $_SESSION['user_role'] = $row['role'];
+
+
+                        session_regenerate_id(true);
                         header("Location: index.php?loginSuccess");
+                        session_write_close();
                         exit();
                     } else {
                         header("Location: sign-in.php?loginFailed");
@@ -109,4 +131,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 
-// Redirect
+// Create A Reservation
+if (isset($_POST['reservation'])) {
+    $client_id = 1;
+    $table_id = $_POST['table'];
+    $reservation_date = $_POST['reservation_date'];
+    $reservation_time = $_POST['reservation_time'];
+    $num_guests = $_POST['num_guests'];
+    $message = $_POST['message'];
+    $status = "pending";
+
+
+    $client_id = escape($client_id);
+    $table_id = escape($table_id);
+    $reservation_date = escape($reservation_date);
+    $reservation_time = escape($reservation_time);
+    $num_guests = escape($num_guests);
+    $message = escape($message);
+    $status = escape($status);
+
+    $query = "INSERT INTO reservations (client_id, table_id, num_guests, date, time, status, message) VALUES ('$client_id', '$table_id', '$num_guests', '$reservation_date', '$reservation_time', '$status', '$message')";
+    $reg_reservation = mysqli_query($conn, $query);
+    if (confirmQuery($reg_reservation)) {
+        header("Location: reservation.php?reservationSuccess");
+        exit();
+    }
+}

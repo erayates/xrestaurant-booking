@@ -1,13 +1,14 @@
 <?php
 include("../config/db.php");
 
-
 // Check the client whether admin or not
 function isAdmin()
 {
     if (isset($_SESSION['role'])) {
         if (isset($_SESSION['role']) == 'admin') {
             return true;
+        } else {
+            return false;
         }
     }
 }

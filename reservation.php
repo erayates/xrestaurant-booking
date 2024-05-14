@@ -1,4 +1,12 @@
 <?php include_once("./includes/templates/header.php") ?>
+
+<?php
+if (!isset($_SESSION['user_email'])) {
+    header("Location: sign-in.php?unauthorized");
+    exit();
+}
+?>
+
 <section class="page-hero">
     <div class="d-flex container flex-column justify-content-center align-items-center">
         <h2 class="h1 font-weight-bold">Reservation</h2>
@@ -7,6 +15,17 @@
 
 <section class="section--space">
     <div class="container row mx-auto">
+        <?php
+        if (isset($_GET['reservationSuccess'])) {
+            echo "
+                <div class='alert alert-success alert-dismissible fade show text-center col-12' role='alert'>
+                    <strong>SUCCESS!</strong> You have booked a table successfully!
+                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                    <span aria-hidden='true'>&times;</span>
+                    </button>
+            </div>";
+        }
+        ?>
         <div class="col-12 col-lg-6 ">
             <div>
                 <h3 class="h3 font-weight-bold">Tables</h3>
@@ -40,7 +59,7 @@
 
                         <div class="col-12">
                             <label for="role">Pick # of Guests: <span class="text-danger">*</span></label>
-                            <input type="radio" name="num_guests" value=1 /> 1
+                            <input type="radio" name="num_guests" value=1 required /> 1
                             <input type="radio" name="num_guests" value=2 /> 2
                             <input type="radio" name="num_guests" value=3 /> 3
                             <input type="radio" name="num_guests" value=4 /> 4
@@ -54,13 +73,18 @@
                         </div>
 
                         <div class="col-12 mb-4">
-                            <label for="date" class="form-label">Pick A Date: <span class="text-danger">*</span></label>
-                            <input type="date" class="form-control" name="date" id="date" value="" on>
+                            <label for="reservation_date" class="form-label">Pick A Date: <span class="text-danger">*</span></label>
+                            <input type="date" class="form-control" name="reservation_date" id="reservation_date" value="" on required />
                         </div>
 
                         <div class="col-12 mb-4">
-                            <label for="time" class="form-label">Pick A Time: <span class="text-danger">*</span></label>
-                            <input type="time" class="form-control" name="time" id="time" value="" min="10:00">
+                            <label for="reservation_time" class="form-label">Pick A Time: <span class="text-danger">*</span></label>
+                            <input type="time" class="form-control" name="reservation_time" id="reservation_time" value="" min="10:00" required />
+                        </div>
+
+                        <div class="col-12 mb-4">
+                            <label for="message" class="form-label">Enter Your Message: <span class="text-danger">*</span></label>
+                            <textarea name="message" rows="5" style="resize: none;" class="form-control" id="message" required></textarea>
                         </div>
 
                         <div class="col-12 mb-4">

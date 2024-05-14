@@ -24,6 +24,17 @@ if (isset($_GET['logoutSuccess'])) {
 }
 ?>
 
+<?php
+if (isset($_GET['permissionDenied'])) {
+    echo "
+    <div class='alert alert-danger alert-dismissible fade show text-center' role='alert'>
+    <strong>You don't have permission to show that page!</strong>
+    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+      <span aria-hidden='true'>&times;</span>
+    </button>
+  </div>";
+}
+?>
 
 <section class="hero px-3" style="background-image: url('assets/images/restaurant-hero-bg.jpg');">
     <div class="container h-100">
@@ -142,7 +153,7 @@ if (isset($_GET['logoutSuccess'])) {
     <!-- Gallery -->
     <div class="row mt-5">
         <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
-            <img src="assets/images/restaurant-cta.jpg" class="w-100 shadow-1-strong rounded mb-4" alt="Boat on Calm Water" />
+            <img src="assets/images/restaurant-indoor.jpeg" class="w-100 shadow-1-strong rounded mb-4" alt="Boat on Calm Water" />
             <img src="assets/images/restaurant-hero-bg.jpg" class="w-100 shadow-1-strong rounded mb-4" alt="Wintry Mountain Landscape" />
         </div>
 
@@ -160,7 +171,7 @@ if (isset($_GET['logoutSuccess'])) {
 
 </section>
 
-<section id="call-to-action" class=" px-3" style="background-image: url('assets/images/restaurant-cta.jpg');">
+<section id="call-to-action" class=" px-3" style="background-image: url('assets/images/restaurant-outdoor.jpg');">
     <div class="container h-100">
         <div class="row h-100 justify-content-md-center align-items-md-center">
             <div class="col-12 col-md-11 col-lg-9 col-xl-7 col-xxl-6 d-flex flex-column justify-content-center text-center text-white ">
