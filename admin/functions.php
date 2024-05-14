@@ -4,8 +4,8 @@ include("../config/db.php");
 // Check the client whether admin or not
 function isAdmin()
 {
-    if (isset($_SESSION['role'])) {
-        if (isset($_SESSION['role']) == 'admin') {
+    if (isset($_SESSION['user_role'])) {
+        if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin') {
             return true;
         } else {
             return false;
@@ -75,6 +75,7 @@ if (isset($_POST['create_client'])) {
 
     if (confirmQuery($create_client_query)) {
         header("Location: clients.php?addSuccess");
+        exit();
     }
 }
 
@@ -97,6 +98,7 @@ if (isset($_POST['create_table'])) {
     $create_table_query = mysqli_query($conn, $query);
     if (confirmQuery($create_table_query)) {
         header("Location: tables.php?addSuccess");
+        exit();
     }
 }
 
@@ -130,6 +132,34 @@ if (isset($_POST['create_menu_item'])) {
 
     if (confirmQuery($create_menu_query)) {
         header("Location: menu.php?addSuccess");
+        exit();
+    }
+}
+
+// Create A New Reservation
+
+if (isset($_POST['create_reservation'])) {
+    // admin check yap.
+    $client_id = $_POST['client'];
+    $table_id = $_POST['table'];
+    $num_guests = $_POST['num_guests'];
+    $date = $_POST['date'];
+    $time = $_POST['time'];
+    $status = $_POST['status'];
+    $message = $_POST['message'];
+
+    $client_id = escape($client_id);
+    $table_id = escape($table_id);
+    $num_guests = escape($num_guests);
+    $date = escape($date);
+    $time = escape($time);
+    $status = escape($status);
+    $message = escape($message);
+    $query = "INSERT INTO reservations(client_id,table_id,num_guests,date,time,status,message)";
+    $query .= "VALUES('{$client_id}','{$table_id}','{$num_guests}','{$date}','{$time}','{$status}','{$message}')";
+    $create_reservation_query = mysqli_query($conn, $query);
+    if (confirmQuery($create_reservation_query)) {
+        header("Location: reservations.php?addSuccess");
         exit();
     }
 }

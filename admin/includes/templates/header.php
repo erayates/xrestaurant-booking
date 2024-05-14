@@ -4,7 +4,7 @@ session_start();
 include 'functions.php';
 
 if (!isAdmin()) {
-    header("Location: ..\index.php?unauthorized");
+    header("Location: ..\index.php?permissionDenied");
     exit();
 }
 
@@ -46,7 +46,6 @@ if (!isAdmin()) {
 
 
     <link href="assets/css/bootstrap-min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
     <link rel="stylesheet" href="@sweetalert2/theme-wordpress-admin/wordpress-admin.css">
 
 </head>
