@@ -62,45 +62,22 @@ if (isset($_GET['permissionDenied'])) {
         <div class="bg-warning rounded" style="height: 6px;"></div>
     </div>
     <div class="mt-4 row">
-        <div class="col-12 col-md-6 col-lg-3 w-100">
-            <div class="card">
-                <img class="card-img-top" src="assets/images/restaurant-hero-bg.jpg" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title font-weight-bold">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <?php
+        $sql = "SELECT * FROM menu LIMIT 4";
+        $result = mysqli_query($conn, $sql);
+        while ($row = mysqli_fetch_assoc($result)) { ?>
+            <div class="col-12 col-md-6 col-lg-3 w-100">
+                <div class='card'>
+                    <img class='card-img-top' src='assets/images/menu/<?php echo $row['image']?>' alt='Card image cap'>
+                    <div class='card-body'>
+                        <h5 class='card-title font-weight-bold'><?php echo "{$row['name']}" ?></h5>
+                        <p class='card-text'><?php echo "{$row['description']} " ?></p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-12 col-md-6 col-lg-3">
-            <div class="card">
-                <img class="card-img-top" src="assets/images/restaurant-hero-bg.jpg" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title font-weight-bold">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-12 col-md-6 col-lg-3">
-            <div class="card">
-                <img class="card-img-top" src="assets/images/restaurant-hero-bg.jpg" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title font-weight-bold">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-12 col-md-6 col-lg-3">
-            <div class="card">
-                <img class="card-img-top" src="assets/images/restaurant-hero-bg.jpg" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title font-weight-bold">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
-            </div>
-        </div>
-
+        <?php
+        }
+        ?>
     </div>
 
 </section>
@@ -150,7 +127,7 @@ if (isset($_GET['permissionDenied'])) {
         <p class="font-italic h6">Indoor and outdoor photos of our stylish and elegant restaurant</p>
         <div class="bg-warning rounded" style="height: 6px;"></div>
     </div>
-    
+
     <div class="row mt-5">
         <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
             <img src="assets/images/restaurant-indoor.jpeg" class="w-100 shadow-1-strong rounded mb-4" alt="Boat on Calm Water" />
