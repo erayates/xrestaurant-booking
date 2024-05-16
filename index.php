@@ -150,7 +150,7 @@ if (isset($_GET['permissionDenied'])) {
         <p class="font-italic h6">Indoor and outdoor photos of our stylish and elegant restaurant</p>
         <div class="bg-warning rounded" style="height: 6px;"></div>
     </div>
-    <!-- Gallery -->
+    
     <div class="row mt-5">
         <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
             <img src="assets/images/restaurant-indoor.jpeg" class="w-100 shadow-1-strong rounded mb-4" alt="Boat on Calm Water" />
@@ -167,7 +167,6 @@ if (isset($_GET['permissionDenied'])) {
             <img src="assets/images/restaurant-indoor.jpeg" class="w-100 shadow-1-strong rounded mb-4" alt="Yosemite National Park" />
         </div>
     </div>
-    <!-- Gallery -->
 
 </section>
 

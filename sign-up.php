@@ -49,25 +49,25 @@ if (isset($_SESSION['email'])) {
                     <form action="functions.php" method="POST">
                         <div class="row overflow-hidden ">
                             <div class="col-12 mb-4">
-                                <label for="firstName" class="form-label">First Name <span class="text-danger">*</span></label>
+                                <label for="firstName" class="form-label">First Name: <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" name="firstName" id="firstName" placeholder="First Name" required>
                             </div>
                             <div class="col-12 mb-4">
-                                <label for="lastName" class="form-label">Last Name <span class="text-danger">*</span></label>
+                                <label for="lastName" class="form-label">Last Name: <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" name="lastName" id="lastName" placeholder="Last Name" required>
                             </div>
                             <div class="col-12 mb-4">
-                                <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                                <label for="email" class="form-label">Email: <span class="text-danger">*</span></label>
                                 <input type="email" class="form-control" name="email" id="email" placeholder="name@example.com" required>
                             </div>
 
                             <div class="col-12 mb-4">
-                                <label for="phone" class="form-label">Phone <span class="text-danger">*</span></label>
+                                <label for="phone" class="form-label">Phone: <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" name="phone" id="phone" pattern="[0][0-9]{10}" placeholder="05XXXXXXXXX" required>
                             </div>
 
                             <div class="col-12 mb-4">
-                                <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
+                                <label for="password" class="form-label">Password: <span class="text-danger">*</span></label>
                                 <input type="password" class="form-control" name="password" id="password" value="" required>
                             </div>
                             <div class="col-12 mb-4">
