@@ -126,10 +126,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $_SESSION['user_email'] = $row['email'];
                         $_SESSION['user_role'] = $row['role'];
 
-
                         session_regenerate_id(true);
                         header("Location: index.php?loginSuccess");
-                        session_write_close();
                         exit();
                     } else {
                         header("Location: sign-in.php?loginFailed");

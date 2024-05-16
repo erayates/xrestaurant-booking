@@ -1,7 +1,9 @@
-<?php include 'includes/templates/header.php' ?>
+<?php
+include 'includes/templates/header.php';
+?>
 
 <?php
-if (!isset($_SESSION)) {
+if (!isset($_SESSION['user_id'])) {
     header("Location: sign-in.php");
     exit();
 }

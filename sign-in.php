@@ -51,6 +51,11 @@ if (isset($_SESSION['user_email'])) {
                         </div>
                     </div>
                     <form action="functions.php" method="POST">
+                        <?php
+                        if (isset($_GET['loginFailed'])) {
+                            echo "<span class='text-danger'>Email or password is incorrect.</span>";
+                        }
+                        ?>
                         <div class="row overflow-hidden ">
                             <div class="col-12 mb-4">
                                 <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
