@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 include("./config/db.php");
 
@@ -25,6 +24,26 @@ function isUserExists($email)
     } else {
         return false;
     }
+}
+
+function checkOtherclients($email, $user_id = null)
+{
+    global $conn;
+    $sanitized_email = escape($email);
+    $query = "SELECT * FROM clients WHERE email = '{$sanitized_email}'";
+
+    if ($user_id !== null) {
+        $sanitized_user_id = escape($user_id);
+        $query .= " AND client_id != '{$sanitized_user_id}'";
+    }
+
+    $select_query = mysqli_query($conn, $query);
+
+    if (!$select_query) {
+        die("Query failed: " . mysqli_error($conn));
+    }
+
+    return mysqli_num_rows($select_query) > 0;
 }
 
 function confirmQuery($result)
@@ -82,6 +101,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 }
 
 // Login Logic
+
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['login'])) {
         if (!empty($_POST['email']) && !empty($_POST['password'])) {
