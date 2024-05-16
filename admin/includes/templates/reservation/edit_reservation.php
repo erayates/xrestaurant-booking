@@ -1,55 +1,63 @@
 <?php
 if (isset($_POST['edit_reservation'])) {
-    $reservation_table = $_POST['table'];
-    $reservation_num_guests = $_POST['num_guests'];
-    $reservation_date = $_POST['date'];
-    $reservation_time = $_POST['time'];
-    $reservation_message = $_POST['message'];
-    $reservation_status = $_POST['status'];
+    $reservation_id = $_GET['rid'];
+    $new_table_id = $_POST['table'];
+    $num_guests = $_POST['num_guests'];
+    $date = $_POST['date'];
+    $time = $_POST['time'];
+    $message = $_POST['message'];
+    $status = $_POST['status'];
 
-    $table = escape($reservation_table);
-    $num_guests = escape($reservation_num_guests);
-    $date = escape($reservation_date);
-    $time = escape($reservation_time);
-    $message = escape($reservation_message);
-    $status = escape($reservation_status);
+    $new_table_id = escape($new_table_id);
+    $num_guests = escape($num_guests);
+    $date = escape($date);
+    $time = escape($time);
+    $message = escape($message);
+    $status = escape($status);
 
+    // Önceki masayı belirlemek için mevcut rezervasyonu al
+    $query = "SELECT table_id FROM reservations WHERE reservation_id = {$reservation_id}";
+    $result = mysqli_query($conn, $query);
+    confirmQuery($result);
+
+    $old_table_id = "";
+    if ($row = mysqli_fetch_assoc($result)) {
+        $old_table_id = $row['table_id'];
+    }
+
+    // Rezervasyonu güncelle
     $query = "UPDATE reservations SET ";
-    $query .= "table_id = '{$table}', ";
+    $query .= "table_id = '{$new_table_id}', ";
     $query .= "num_guests = '{$num_guests}', ";
     $query .= "date = '{$date}', ";
     $query .= "time = '{$time}', ";
     $query .= "message = '{$message}', ";
     $query .= "status = '{$status}' ";
-    $query .= "WHERE reservation_id = {$_GET['rid']}";
-
+    $query .= "WHERE reservation_id = {$reservation_id}";
 
     $update_reservation = mysqli_query($conn, $query);
+    confirmQuery($update_reservation);
 
-    if (confirmQuery($update_reservation)) {
-        // Rezervasyon durumu onaylanmış veya bekliyor durumda ise ilgili masanın durumu full olarak değişecek.
-        if ($status == 'approved' || $status == 'pending') {
-            $table_query = "UPDATE tables SET ";
-            $table_query .= "status = 'full' ";
-            $table_query .= "WHERE table_id = {$table}";
-            $update_table_query = mysqli_query($conn, $table_query);
-            if (confirmQuery($update_table_query)) {
-                header("Location: reservations.php?updateSuccess");
-                exit();
-            }
-        } else {
-            // Rezervasyon durumu reddedilmişse ilgili masanın durumu empty olarak değişecek.
-            $table_query = "UPDATE tables SET ";
-            $table_query .= "status = 'empty' ";
-            $table_query .= "WHERE table_id = {$table}";
-
-            $update_table_query = mysqli_query($conn, $table_query);
-            if (confirmQuery($update_table_query)) {
-                header("Location: reservations.php?updateSuccess");
-                exit();
-            }
-        }
+    // Önceki masa farklı ise durumu 'empty' olarak güncelle
+    if ($old_table_id !== $new_table_id) {
+        $table_query = "UPDATE tables SET status = 'empty' WHERE table_id = {$old_table_id}";
+        $update_old_table_status = mysqli_query($conn, $table_query);
+        confirmQuery($update_old_table_status);
     }
+
+    // Yeni masanın durumunu güncelle
+    if ($status == 'approved' || $status == 'pending') {
+        $table_status = 'full';
+    } else {
+        $table_status = 'empty';
+    }
+
+    $table_query = "UPDATE tables SET status = '{$table_status}' WHERE table_id = {$new_table_id}";
+    $update_table_status = mysqli_query($conn, $table_query);
+    confirmQuery($update_table_status);
+
+    header("Location: reservations.php?updateSuccess");
+    exit();
 }
 
 if (isset($_GET['rid'])) {
