@@ -4,10 +4,10 @@
 // $user_count = countAllUsers();
 // $category_count = countAllCategories();
 
-$post_count = 16;
-$comment_count = 120;
-$user_count = 24;
-$category_count = 8;
+$reservations_count = countAllReservations();
+$messages_count = countAllMessages();
+$clients_count = countAllClients();
+$menu_count = countAllMenu();
 ?>
 
 
@@ -20,7 +20,7 @@ $category_count = 8;
                         <i class="fa fa-file-text fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <div class='huge'><?php echo $post_count ?></div>
+                        <div class='huge'><?php echo $reservations_count ?></div>
                         <div>Reservations</div>
                     </div>
                 </div>
@@ -42,7 +42,7 @@ $category_count = 8;
                         <i class="fa fa-comments fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <div class='huge'><?php echo $comment_count ?></div>
+                        <div class='huge'><?php echo $messages_count ?></div>
                         <div>Messages</div>
                     </div>
                 </div>
@@ -64,7 +64,7 @@ $category_count = 8;
                         <i class="fa fa-user fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <div class='huge'><?php echo $user_count ?></div>
+                        <div class='huge'><?php echo $clients_count ?></div>
                         <div> Clients</div>
                     </div>
                 </div>
@@ -86,7 +86,7 @@ $category_count = 8;
                         <i class="fa fa-list fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <div class='huge'><?php echo $category_count ?></div>
+                        <div class='huge'><?php echo $menu_count ?></div>
                         <div>Menu</div>
                     </div>
                 </div>

@@ -137,7 +137,6 @@ if (isset($_POST['create_menu_item'])) {
 }
 
 // Create A New Reservation
-
 if (isset($_POST['create_reservation'])) {
     // admin check yap.
     $client_id = $_POST['client'];
@@ -177,4 +176,45 @@ if (isset($_POST['create_reservation'])) {
             }
         }
     }
+}
+
+
+// Count All Reservations
+function countAllReservations()
+{
+    global $conn;
+    $query = "SELECT * FROM reservations";
+    $select_all_reservations_query = mysqli_query($conn, $query);
+    confirmQuery($select_all_reservations_query);
+    return mysqli_num_rows($select_all_reservations_query);
+}
+
+// Count All Messages
+function countAllMessages()
+{
+    global $conn;
+    $query = "SELECT * FROM messages";
+    $select_all_messages_query = mysqli_query($conn, $query);
+    confirmQuery($select_all_messages_query);
+    return mysqli_num_rows($select_all_messages_query);
+}
+
+// Count All Clients
+function countAllClients()
+{
+    global $conn;
+    $query = "SELECT * FROM clients";
+    $select_all_clients_query = mysqli_query($conn, $query);
+    confirmQuery($select_all_clients_query);
+    return mysqli_num_rows($select_all_clients_query);
+}
+
+// Count All Menu
+function countAllMenu()
+{
+    global $conn;
+    $query = "SELECT * FROM menu";
+    $select_all_menu_query = mysqli_query($conn, $query);
+    confirmQuery($select_all_menu_query);
+    return mysqli_num_rows($select_all_menu_query);
 }
