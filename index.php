@@ -66,7 +66,7 @@ if (isset($_GET['permissionDenied'])) {
         $sql = "SELECT * FROM menu LIMIT 4";
         $result = mysqli_query($conn, $sql);
         while ($row = mysqli_fetch_assoc($result)) { ?>
-            <div class="col-12 col-md-6 col-lg-3 w-100">
+            <div class="col-12 col-md-6 col-lg-3 w-100 mt-5">
                 <div class='card'>
                     <img class='card-img-top' src='assets/images/menu/<?php echo $row['image']?>' alt='Card image cap'>
                     <div class='card-body'>
@@ -86,7 +86,7 @@ if (isset($_GET['permissionDenied'])) {
     <div class="container py-5">
         <div class="text-white d-flex align-items-end flex-column w-100 text-right">
             <div style=" width: fit-content;">
-                <h2 class="h1 font-weight-bold">Reviews From Our Customers</h2>
+                <h2 class="h2 font-weight-bold">Reviews From Our Customers</h2>
                 <p class="font-italic h6">Opinions of our customers who tried our unique flavors</p>
                 <div class="bg-warning rounded" style="height: 6px;"></div>
             </div>

@@ -20,7 +20,7 @@
                         <h6 class="text-uppercase fw-bold">Menu</h6>
                         <hr class="mb-4 mt-0 d-inline-block mx-auto" style="width: 60px; background-color: #7c4dff; height: 2px" />
                         <p>
-                            <a href="./menu" class="text-white">Check out our menu right now!</a>
+                            <a href="./menu.php" class="text-white">Check out our menu right now!</a>
                         </p>
 
                     </div>
@@ -29,13 +29,13 @@
                         <h6 class="text-uppercase fw-bold">Useful links</h6>
                         <hr class="mb-4 mt-0 d-inline-block mx-auto" style="width: 60px; background-color: #7c4dff; height: 2px" />
                         <p>
-                            <a href="./reservation" class="text-white">Book A Table</a>
+                            <a href="./reservation.php" class="text-white">Book A Table</a>
                         </p>
                         <p>
-                            <a href="./contact-us" class="text-white">Contact Us!</a>
+                            <a href="./contact-us.php" class="text-white">Contact Us!</a>
                         </p>
                         <p>
-                            <a href="./about-us" class="text-white">About Us</a>
+                            <a href="./about-us.php" class="text-white">About Us</a>
                         </p>
                     </div>
 

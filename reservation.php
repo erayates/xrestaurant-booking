@@ -105,7 +105,7 @@ if (!isset($_SESSION['user_email'])) {
             </div>
         </div>
 
-        <div class="col-12 col-lg-6">
+        <div class="col-12 col-lg-6 mt-5 mt-md-0">
             <h3 class="h3 font-weight-bold">Status of Tables</h3>
             <div style="overflow-x: auto;">
                 <table class="table table-striped">
