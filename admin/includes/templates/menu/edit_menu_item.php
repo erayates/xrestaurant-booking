@@ -7,15 +7,23 @@ if (isset($_POST['edit_menu_item'])) {
     $item_image = $_FILES['image']['name'];
     $item_image_temp = $_FILES['image']['tmp_name'];
 
-    if ($_FILES['image']['error'] !== UPLOAD_ERR_OK) {
-        // Handle the error
-        echo "File upload failed with error code: {$_FILES['image']['error']}";
-    }
-
     $upload_directory = $_SERVER['DOCUMENT_ROOT'] . "/xrestaurant-booking/assets/images/menu/";
-    move_uploaded_file($item_image_temp, $upload_directory . $item_image);
 
-
+    if (!empty($item_image)) {
+        if ($_FILES['image']['error'] !== UPLOAD_ERR_OK) {
+            // Handle the error
+            echo "File upload failed with error code: {$_FILES['image']['error']}";
+        } else {
+            move_uploaded_file($item_image_temp, $upload_directory . $item_image);
+        }
+    } else {
+        // Eğer yeni bir resim yüklenmemişse, mevcut resmi almak için veri tabanından sorgulama yap
+        $query = "SELECT image FROM menu WHERE item_id = {$_GET['mid']}";
+        $result = mysqli_query($conn, $query);
+        if ($row = mysqli_fetch_assoc($result)) {
+            $item_image = $row['image'];
+        }
+    }
 
     $name = escape($item_name);
     $description = escape($item_description);
