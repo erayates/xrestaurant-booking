@@ -7,23 +7,6 @@ if (!isAdmin()) {
     header("Location: ..\index.php?permissionDenied");
     exit();
 }
-
-// if (isset($_SESSION['email'])) {
-//     $username = $_SESSION['user_username'];
-//     $query = "SELECT * FROM users WHERE user_username = '{$username}' ";
-//     $select_user_profile_query = mysqli_query($conn, $query);
-//     while ($row = mysqli_fetch_assoc($select_user_profile_query)) {
-//         $user_id = $row['user_id'];
-//         $user_username = $row['user_username'];
-//         $user_password = $row['user_password'];
-//         $user_firstname = $row['user_firstname'];
-//         $user_lastname = $row['user_lastname'];
-//         $user_email = $row['user_email'];
-//         $user_image = $row['user_image'];
-//         $user_role = $row['user_role'];
-//     }
-// }
-
 ?>
 
 <!DOCTYPE html>

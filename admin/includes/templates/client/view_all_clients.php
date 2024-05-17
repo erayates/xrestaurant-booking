@@ -58,8 +58,6 @@ if (isset($_GET['addSuccess'])) { ?>
                 $phone = htmlspecialchars($row['phone']);
                 $email = htmlspecialchars($row['email']);
             ?>
-
-
                 <tr>
                     <th scope="row"><?php echo $client_id ?></th>
                     <td><?php echo $firstName ?></td>
@@ -79,11 +77,12 @@ if (isset($_GET['addSuccess'])) { ?>
 
             <?php
             if (isset($_GET['delete'])) {
-                // isAdmin kontrolü tekrar eklenmeli
-                $deleted_user_id = $_GET['delete'];
-                $query = "DELETE FROM clients WHERE client_id = {$deleted_user_id}";
-                $delete_query = mysqli_query($conn, $query);
-                header("Location: clients.php?deleteSuccess");
+                if (isAdmin()) {
+                    $deleted_user_id = $_GET['delete'];
+                    $query = "DELETE FROM clients WHERE client_id = {$deleted_user_id}";
+                    $delete_query = mysqli_query($conn, $query);
+                    header("Location: clients.php?deleteSuccess");
+                }
             }
 
             ?>

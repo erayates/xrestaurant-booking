@@ -48,12 +48,13 @@
 
             <?php
             if (isset($_GET['delete'])) {
-                // isAdmin kontrolü tekrar eklenmeli
-                $deleted_user_id = $_GET['delete'];
-                $query = "DELETE FROM tables WHERE table_id = {$deleted_user_id}";
-                $delete_query = mysqli_query($conn, $query);
-                if ($delete_query) {
-                    header("Location: tables.php?deleteSuccess");
+                if (isAdmin()) {
+                    $deleted_user_id = $_GET['delete'];
+                    $query = "DELETE FROM tables WHERE table_id = {$deleted_user_id}";
+                    $delete_query = mysqli_query($conn, $query);
+                    if ($delete_query) {
+                        header("Location: tables.php?deleteSuccess");
+                    }
                 }
             }
 

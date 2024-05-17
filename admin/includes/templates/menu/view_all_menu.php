@@ -78,12 +78,13 @@ if (isset($_GET['addSuccess'])) { ?>
 
             <?php
             if (isset($_GET['delete'])) {
-                // isAdmin kontrolü tekrar eklenmeli
-                $deleted_item_id = $_GET['delete'];
-                $query = "DELETE FROM menu WHERE item_id = {$deleted_item_id}";
-                $delete_query = mysqli_query($conn, $query);
-                if ($delete_query) {
-                    header("Location: menu.php?deleteSuccess");
+                if (isAdmin()) {
+                    $deleted_item_id = $_GET['delete'];
+                    $query = "DELETE FROM menu WHERE item_id = {$deleted_item_id}";
+                    $delete_query = mysqli_query($conn, $query);
+                    if ($delete_query) {
+                        header("Location: menu.php?deleteSuccess");
+                    }
                 }
             }
 

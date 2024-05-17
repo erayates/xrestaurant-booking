@@ -55,12 +55,13 @@ if (isset($_GET['deleteSuccess'])) { ?>
 
             <?php
             if (isset($_GET['delete'])) {
-                // isAdmin kontrolü tekrar eklenmeli
-                $deleted_message_id = $_GET['delete'];
-                $query = "DELETE FROM messages WHERE message_id = {$deleted_message_id}";
-                $delete_query = mysqli_query($conn, $query);
-                if ($delete_query) {
-                    header("Location: messages.php?deleteSuccess");
+                if (isAdmin()) {
+                    $deleted_message_id = $_GET['delete'];
+                    $query = "DELETE FROM messages WHERE message_id = {$deleted_message_id}";
+                    $delete_query = mysqli_query($conn, $query);
+                    if ($delete_query) {
+                        header("Location: messages.php?deleteSuccess");
+                    }
                 }
             }
 
