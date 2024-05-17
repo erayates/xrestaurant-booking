@@ -1,14 +1,13 @@
 <?php
 if (isset($_POST['edit_reservation'])) {
     $reservation_id = $_GET['rid'];
-    $new_table_id = $_POST['table'];
+    $new_table_id = "";
     $num_guests = $_POST['num_guests'];
     $date = $_POST['date'];
     $time = $_POST['time'];
     $message = $_POST['message'];
     $status = $_POST['status'];
 
-    $new_table_id = escape($new_table_id);
     $num_guests = escape($num_guests);
     $date = escape($date);
     $time = escape($time);
@@ -23,6 +22,12 @@ if (isset($_POST['edit_reservation'])) {
     $old_table_id = "";
     if ($row = mysqli_fetch_assoc($result)) {
         $old_table_id = $row['table_id'];
+    }
+
+    if ($_POST['table']) {
+        $new_table_id = escape($_POST['table']);
+    } else {
+        $new_table_id = $old_table_id;
     }
 
     // Rezervasyonu güncelle

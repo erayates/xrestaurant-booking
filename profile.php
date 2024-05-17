@@ -169,7 +169,7 @@ if (isset($_GET['updateSuccess'])) {
         </div>
     </div>
 
-    <div class="col-12 col-lg-6">
+    <div class="col-12 col-lg-6 mt-5 mt-md-0">
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">
@@ -222,6 +222,62 @@ if (isset($_GET['updateSuccess'])) {
 
         </form>
 
+    </div>
+    <div class="col-xs-12 mt-5" style="overflow-x: auto;">
+        <h1 class="page-header">
+            Your Reservations
+        </h1>
+        <div class="bg-warning rounded" style="height: 6px;"></div>
+        <div>
+            <table class="table table-striped mt-3" style="overflow-x: auto;">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Table ID</th>
+                        <th scope="col"># of Guests</th>
+                        <th scope="col">Message</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Time</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <?php
+                    $query = "SELECT * FROM reservations WHERE client_id = '" . $_SESSION['user_id'] . "'";
+                    $get_all_reservations = mysqli_query($conn, $query);
+                    while ($row = mysqli_fetch_assoc($get_all_reservations)) {
+                        $table_id = htmlspecialchars($row['table_id']);
+                        $reservation_id = htmlspecialchars($row['reservation_id']);
+                        $num_guests =  htmlspecialchars($row['num_guests']);
+                        $message = htmlspecialchars($row['message']);
+                        $status = htmlspecialchars($row['status']);
+                        $date = htmlspecialchars($row['date']);
+                        $time = htmlspecialchars($row['time']);
+                    ?>
+                        <tr>
+                            <th scope="row"><?php echo $reservation_id ?></th>
+                            <td><?php echo $table_id ?></td>
+                            <td><?php echo $num_guests ?></td>
+                            <td><?php echo $message ?></td>
+                            <td class="text-white"><?php if ($status === "pending") { ?>
+                                    <span class='badge' style="background-color: blue;">Pending</span>
+                                <?php } elseif ($status === "approved") { ?>
+                                    <span class='badge' style="background-color: green;">Approved</span>
+                                <?php } elseif ($status === "denied") { ?>
+                                    <span class='badge' style="background-color: red;">Denied</span>
+                                <?php }
+                                ?>
+                            </td>
+                            <td><?php echo $date ?></td>
+                            <td><?php echo $time ?></td>
+
+                        <?php }
+                        ?>
+
+                </tbody>
+            </table>
+        </div>
     </div>
     </div>
 </section>

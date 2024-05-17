@@ -33,7 +33,7 @@ if (isset($_GET['addSuccess'])) { ?>
 ?>
 
 <div class="col-xs-12" style="overflow-x: auto;">
-    <table class="table ">
+    <table class="table">
         <thead>
             <tr>
                 <th scope="col">#</th>
