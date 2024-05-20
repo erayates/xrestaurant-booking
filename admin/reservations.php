@@ -67,6 +67,10 @@
                         case 'edit_reservation':
                             include './includes/templates/reservation/edit_reservation.php';
                             break;
+
+                        case 'search_reservation':
+                            include './includes/templates/reservation/search_reservation.php';
+                            break;
                         default:
                             include './includes/templates/reservation/view_all_reservations.php';
                             break;

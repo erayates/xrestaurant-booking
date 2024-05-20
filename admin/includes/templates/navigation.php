@@ -68,6 +68,9 @@
                     <li>
                         <a href="reservations.php?source=add_reservation"><i class="fa-solid fa-plus"></i> Add Reservation</a>
                     </li>
+                    <li>
+                        <a href="reservations.php?source=search_reservation"><i class="fa-solid fa-magnifying-glass"></i> Search Reservation</a>
+                    </li>
                 </ul>
             </li>
             <li>

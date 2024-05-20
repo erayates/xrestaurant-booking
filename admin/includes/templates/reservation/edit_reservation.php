@@ -41,28 +41,31 @@ if (isset($_POST['edit_reservation'])) {
     $query .= "WHERE reservation_id = {$reservation_id}";
 
     $update_reservation = mysqli_query($conn, $query);
-    confirmQuery($update_reservation);
-
-    // Önceki masa farklı ise durumu 'empty' olarak güncelle
-    if ($old_table_id !== $new_table_id) {
-        $table_query = "UPDATE tables SET status = 'empty' WHERE table_id = {$old_table_id}";
-        $update_old_table_status = mysqli_query($conn, $table_query);
-        confirmQuery($update_old_table_status);
+    if (confirmQuery($update_reservation)) {
+        header("Location: reservations.php?updateSuccess");
+        exit();
     }
 
-    // Yeni masanın durumunu güncelle
-    if ($status == 'approved' || $status == 'pending') {
-        $table_status = 'full';
-    } else {
-        $table_status = 'empty';
-    }
+    // Below code pieces marked as deprecated because of the reason adding new trigger to the database about updating the reservation.
 
-    $table_query = "UPDATE tables SET status = '{$table_status}' WHERE table_id = {$new_table_id}";
-    $update_table_status = mysqli_query($conn, $table_query);
-    confirmQuery($update_table_status);
+    // // Önceki masa farklı ise durumu 'empty' olarak güncelle
+    // if ($old_table_id !== $new_table_id) {
+    //     $table_query = "UPDATE tables SET status = 'empty' WHERE table_id = {$old_table_id}";
+    //     $update_old_table_status = mysqli_query($conn, $table_query);
+    //     confirmQuery($update_old_table_status);
+    // }
 
-    header("Location: reservations.php?updateSuccess");
-    exit();
+    // // Yeni masanın durumunu güncelle
+    // if ($status == 'approved' || $status == 'pending') {
+    //     $table_status = 'full';
+    // } else {
+    //     $table_status = 'empty';
+    // }
+
+    // $table_query = "UPDATE tables SET status = '{$table_status}' WHERE table_id = {$new_table_id}";
+    // $update_table_status = mysqli_query($conn, $table_query);
+    // confirmQuery($update_table_status);
+
 }
 
 if (isset($_GET['rid'])) {
