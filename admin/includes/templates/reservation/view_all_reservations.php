@@ -3,8 +3,8 @@
         <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Client ID</th>
-                <th scope="col">Table ID</th>
+                <th scope="col">Client Name</th>
+                <th scope="col">Table Name</th>
                 <th scope="col"># of Guests</th>
                 <th scope="col">Message</th>
                 <th scope="col">Status</th>
@@ -16,13 +16,42 @@
 
         <tbody>
             <?php
-            $query = "SELECT * FROM reservations";
+            $query = "SELECT r.reservation_id, 
+                 CONCAT(c.firstName, ' ', c.lastName) AS client_name,
+                 t.name AS table_name,
+                 t.status AS table_status,
+                 t.table_id,
+                 t.description AS table_description,
+                 t.capacity AS table_capacity,
+                 c.email AS client_email,
+                 c.phone AS client_phone,
+                 r.num_guests,
+                 r.message,
+                 r.status,
+                 r.date,
+                 r.time
+          FROM reservations r
+          JOIN clients c ON r.client_id = c.client_id
+          JOIN tables t ON r.table_id = t.table_id";
+
             $get_all_reservations = mysqli_query($conn, $query);
+
             while ($row = mysqli_fetch_assoc($get_all_reservations)) {
-                $table_id = htmlspecialchars($row['table_id']);
-                $client_id = htmlspecialchars($row['client_id']);
                 $reservation_id = htmlspecialchars($row['reservation_id']);
-                $num_guests =  htmlspecialchars($row['num_guests']);
+
+                // Client
+                $client_name = htmlspecialchars($row['client_name']);
+                $client_email = htmlspecialchars($row['client_email']);
+                $client_phone = htmlspecialchars($row['client_phone']);
+
+                // Table
+                $table_id = htmlspecialchars($row['table_id']);
+                $table_status = htmlspecialchars($row['table_status']);
+                $table_description = htmlspecialchars($row['table_description']);
+                $table_capacity = htmlspecialchars($row['table_capacity']);
+                $table_name = htmlspecialchars($row['table_name']);
+
+                $num_guests = htmlspecialchars($row['num_guests']);
                 $message = htmlspecialchars($row['message']);
                 $status = htmlspecialchars($row['status']);
                 $date = htmlspecialchars($row['date']);
@@ -30,8 +59,8 @@
             ?>
                 <tr>
                     <th scope="row"><?php echo $reservation_id ?></th>
-                    <td><?php echo $client_id ?></td>
-                    <td><?php echo $table_id ?></td>
+                    <td><?php echo $client_name ?></td>
+                    <td><?php echo $table_name ?></td>
                     <td><?php echo $num_guests ?></td>
                     <td><?php echo $message ?></td>
                     <td><?php if ($status === "pending") { ?>
@@ -60,29 +89,17 @@
                                 <table class="table table-striped">
                                     <thead>
                                         <tr>
-                                            <th scope="col">Firstname</th>
-                                            <th scope="col">Lastname</th>
+                                            <th scope="col">Name</th>
                                             <th scope="col">Phone</th>
                                             <th scope="col">Email</th>
                                         </tr>
                                     </thead>
                                     <tody>
-                                        <?php
-                                        $query = "SELECT * FROM clients WHERE client_id = $client_id";
-                                        $get_all_tables = mysqli_query($conn, $query);
-                                        while ($row = mysqli_fetch_assoc($get_all_tables)) {
-                                            $firstname = htmlspecialchars($row['firstName']);
-                                            $lastname = htmlspecialchars($row['lastName']);
-                                            $phone = htmlspecialchars($row['phone']);
-                                            $email = htmlspecialchars($row['email']);
-                                        ?>
-                                            <tr>
-                                                <td><?php echo $firstname ?></td>
-                                                <td><?php echo $lastname ?></td>
-                                                <td><?php echo $phone ?></td>
-                                                <td><?php echo $email ?></td>
-                                            </tr>
-                                        <?php } ?>
+                                        <tr>
+                                            <td><?php echo $client_name ?></td>
+                                            <td><?php echo $client_phone ?></td>
+                                            <td><?php echo $client_email ?></td>
+                                        </tr>
                                     </tody>
                                 </table>
                             </div>
@@ -98,22 +115,12 @@
                                         </tr>
                                     </thead>
                                     <tody>
-                                        <?php
-                                        $query = "SELECT * FROM tables WHERE table_id = $table_id";
-                                        $get_all_tables = mysqli_query($conn, $query);
-                                        while ($row = mysqli_fetch_assoc($get_all_tables)) {
-                                            $name = htmlspecialchars($row['name']);
-                                            $description = htmlspecialchars($row['description']);
-                                            $capacity = htmlspecialchars($row['capacity']);
-                                            $status = htmlspecialchars($row['status']);
-                                        ?>
-                                            <tr>
-                                                <td><?php echo $name ?></td>
-                                                <td><?php echo $description ?></td>
-                                                <td><?php echo $capacity ?></td>
-                                                <td><?php echo $status ?></td>
-                                            </tr>
-                                        <?php } ?>
+                                        <tr>
+                                            <td><?php echo $table_name ?></td>
+                                            <td><?php echo $table_description ?></td>
+                                            <td><?php echo $table_capacity ?></td>
+                                            <td><?php echo $table_status ?></td>
+                                        </tr>
                                     </tody>
                                 </table>
                             </div>
