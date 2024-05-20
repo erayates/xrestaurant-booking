@@ -1,6 +1,11 @@
 <?php
 include("../config/db.php");
 
+// RegExp for validatation of email and phone number
+$emailPattern = '/^\w{2,}@\w{2,}\.\w{2,4}$/';
+$mobilePattern = "/^[0][0-9]{10}$/";
+
+
 // Check the client whether admin or not
 function isAdmin()
 {
@@ -59,7 +64,7 @@ if (isset($_POST['create_client'])) {
     $client_password = password_hash(htmlspecialchars($_POST['password']), PASSWORD_BCRYPT, array('cost' => 12));
     $client_firstname = $_POST['firstName'];
     $client_lastname = $_POST['lastName'];
-    $client_email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+    $client_email = $_POST['email'];
     $client_role = $_POST['role'];
     $client_phone = $_POST['phone'];
 
@@ -69,13 +74,15 @@ if (isset($_POST['create_client'])) {
     $role = escape($client_role);
     $phone = escape($client_phone);
 
-    $query = "INSERT INTO clients(password,firstName,lastName,email,role,phone)";
-    $query .= "VALUES('{$client_password}','{$firstName}','{$lastName}','{$email}','{$role}','{$phone}')";
-    $create_client_query = mysqli_query($conn, $query);
+    if (preg_match($emailPattern, $email) && preg_match($mobilePattern, $phone)) {
+        $query = "INSERT INTO clients(password,firstName,lastName,email,role,phone)";
+        $query .= "VALUES('{$client_password}','{$firstName}','{$lastName}','{$email}','{$role}','{$phone}')";
+        $create_client_query = mysqli_query($conn, $query);
 
-    if (confirmQuery($create_client_query)) {
-        header("Location: clients.php?addSuccess");
-        exit();
+        if (confirmQuery($create_client_query)) {
+            header("Location: clients.php?addSuccess");
+            exit();
+        }
     }
 }
 

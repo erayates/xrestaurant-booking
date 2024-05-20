@@ -14,12 +14,17 @@ if (isset($_POST['send_message'])) {
     $email = escape($email);
     $message = escape($message);
 
-    $query = "INSERT INTO messages(firstName,lastName,phone,email,message)";
-    $query .= "VALUES('{$firstname}','{$lastname}','{$phone}','{$email}','{$message}')";
-    $create_message_query = mysqli_query($conn, $query);
+    if (preg_match($emailPattern, $email) && preg_match($mobilePattern, $phone)) {
+        $query = "INSERT INTO messages(firstName,lastName,phone,email,message)";
+        $query .= "VALUES('{$firstname}','{$lastname}','{$phone}','{$email}','{$message}')";
+        $create_message_query = mysqli_query($conn, $query);
 
-    if (confirmQuery($create_message_query)) {
-        header("Location: contact-us.php?success");
+        if (confirmQuery($create_message_query)) {
+            header("Location: contact-us.php?success");
+            exit();
+        }
+    } else {
+        header("Location: contact-us.php?invalidEmailOrPhone");
         exit();
     }
 }
@@ -43,6 +48,17 @@ if (isset($_POST['send_message'])) {
         echo "
         <div class='alert alert-success alert-dismissible fade show text-center' role='alert'>
         <strong>SUCCESS!</strong> You have sent a message to our! We will contact with you as soon as possible.
+        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+        <span aria-hidden='true'>&times;</span>
+        </button>
+        </div>";
+        // header("refresh:2;url=contact-us.php");
+    }
+
+    if (isset($_GET['invalidEmailOrPhone'])) {
+        echo "
+        <div class='alert alert-danger alert-dismissible fade show text-center' role='alert'>
+        <strong>ERROR!</strong> Invalid email or phone number!
         <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
         <span aria-hidden='true'>&times;</span>
         </button>

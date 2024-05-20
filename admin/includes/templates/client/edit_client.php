@@ -1,7 +1,8 @@
 <?php
 if (isset($_POST['edit_client'])) {
     if (isUserExists($_POST['email'])) {
-        header("Location: clients.php?source=edit_client&uid={$client_id}&editClientFailed");
+        header("Location: clients.php?source=edit_client&uid={$client_id}&editClientFailed=emailExists");
+        exit();
     }
 
     $client_password = password_hash($_POST['password'], PASSWORD_BCRYPT, array('cost' => 12));
@@ -17,18 +18,24 @@ if (isset($_POST['edit_client'])) {
     $phone = escape($client_phone);
     $role = escape($client_role);
 
-    $query = "UPDATE clients SET ";
-    $query .= "password = '{$client_password}', ";
-    $query .= "firstName = '{$firstName}', ";
-    $query .= "lastName = '{$lastName}', ";
-    $query .= "email = '{$email}', ";
-    $query .= "phone = '{$phone}', ";
-    $query .= "role = '{$role}' ";
-    $query .= "WHERE client_id = {$_GET['uid']}";
+    if (preg_match($emailPattern, $email) && preg_match($mobilePattern, $phone)) {
+        $query = "UPDATE clients SET ";
+        $query .= "password = '{$client_password}', ";
+        $query .= "firstName = '{$firstName}', ";
+        $query .= "lastName = '{$lastName}', ";
+        $query .= "email = '{$email}', ";
+        $query .= "phone = '{$phone}', ";
+        $query .= "role = '{$role}' ";
+        $query .= "WHERE client_id = {$_GET['uid']}";
 
-    $update_client = mysqli_query($conn, $query);
-    if (confirmQuery($update_client)) {
-        header("Location: clients.php?updateSuccess");
+        $update_client = mysqli_query($conn, $query);
+        if (confirmQuery($update_client)) {
+            header("Location: clients.php?updateSuccess");
+            exit();
+        }
+    } else {
+        header("Location: clients.php?source=edit_client&uid={$client_id}&editClientFailed=invalidEmailOrPhone");
+        exit();
     }
 }
 ?>
@@ -48,8 +55,12 @@ if (isset($_GET['uid'])) {
 
 ?>
         <?php
-        if (isset($_GET['editClientField'])) {
+        if (isset($_GET['editClientField']) === "emailExists") {
             echo "<span class='text-danger mb-4'>Email already in used.</span>";
+        }
+
+        if (isset($_GET['editClientField']) === "invalidEmailOrPhone") {
+            echo "<span class='text-danger mb-4'>Invalid email or phone number.</span>";
         }
         ?>
 

@@ -66,15 +66,21 @@ if (isset($_POST['update_profile'])) {
     $user_email = escape($user_email);
     $user_phone = escape($user_phone);
 
-    if (checkOtherclients($user_email, $user_id)) {
-        header("Location: profile.php?userExists");
-        exit();
-    }
+    if (preg_match($emailPattern, $user_email) && preg_match($mobilePattern, $user_phone)) {
+        if (checkOtherclients($user_email, $user_id)) {
+            header("Location: profile.php?userExists");
+            exit();
+        }
 
-    $query = "UPDATE clients SET firstName = '{$user_firstname}', lastName = '{$user_lastname}', email = '{$user_email}', phone = '{$user_phone}' WHERE client_id = {$user_id}";
-    $update_user = mysqli_query($conn, $query);
-    if (confirmQuery($update_user)) {
-        header("Location: profile.php?updateProfileSuccess");
+        $query = "UPDATE clients SET firstName = '{$user_firstname}', lastName = '{$user_lastname}', email = '{$user_email}', phone = '{$user_phone}' WHERE client_id = {$user_id}";
+        $update_user = mysqli_query($conn, $query);
+        if (confirmQuery($update_user)) {
+            header("Location: profile.php?updateProfileSuccess");
+            exit();
+        }
+    } else {
+        header("Location: profile.php?invalidEmail");
+        exit();
     }
 }
 ?>
@@ -191,7 +197,19 @@ if (isset($_GET['updateSuccess'])) {
     </button>
   </div>";
         }
+
+        if (isset($_GET['invalidEmail'])) {
+            echo "
+    <div class='alert alert-danger alert-dismissible fade show text-center mt-2' role='alert'>
+    <strong>You entered an invalid email.</strong>
+    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+      <span aria-hidden='true'>&times;</span>
+    </button>
+  </div>";
+        }
         ?>
+
+
 
 
 

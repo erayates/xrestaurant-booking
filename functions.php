@@ -2,6 +2,11 @@
 session_start();
 include("./config/db.php");
 
+
+// RegExp for validatation of email and phone number
+$emailPattern = '/^\w{2,}@\w{2,}\.\w{2,4}$/';
+$mobilePattern = "/^[0][0-9]{10}$/";
+
 function escape($string)
 {
     global $conn;
@@ -77,24 +82,21 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $phone = escape($phone);
             $password = escape($password);
 
-            echo $firstName, $lastName, $email, $phone, $password;
-
             if (isUserExists($email)) {
                 header("Location: sign-up.php?userExists");
                 exit();
             } else {
-                $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+                if (preg_match($emailPattern, $email) && preg_match($mobilePattern, $phone)) {
+                    $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+                    $query = "INSERT INTO clients (firstName, lastName, email, phone, password, role) VALUES ('$firstName', '$lastName', '$email', '$phone', '$hashedPassword', 'client')";
+                    $reg_user = mysqli_query($conn, $query);
+                    if (!$reg_user) {
+                        die("QUERY FAILED" . mysqli_error($conn));
+                    }
 
-                $query = "INSERT INTO clients (firstName, lastName, email, phone, password, role) VALUES ('$firstName', '$lastName', '$email', '$phone', '$hashedPassword', 'client')";
-
-                $reg_user = mysqli_query($conn, $query);
-
-                if (!$reg_user) {
-                    die("QUERY FAILED" . mysqli_error($conn));
+                    header("Location: sign-up.php?success");
+                    exit();
                 }
-
-                header("Location: sign-up.php?success");
-                exit();
             }
         }
     }
@@ -112,23 +114,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $email = escape($email);
             $password = escape($password);
 
-            $query = "SELECT * FROM clients WHERE email = '{$email}'";
-            $result = mysqli_query($conn, $query);
 
-            if ($result) {
-                $row = mysqli_fetch_assoc($result);
-                if ($row) {
-                    if (password_verify($password, $row['password'])) {
-                        $_SESSION['user_id'] = $row["client_id"];
-                        $_SESSION['user_firstname'] = $row['firstName'];
-                        $_SESSION['user_lastname'] = $row['lastName'];
-                        $_SESSION['user_phone'] = $row['phone'];
-                        $_SESSION['user_email'] = $row['email'];
-                        $_SESSION['user_role'] = $row['role'];
+            if (preg_match($emailPattern, $email)) {
+                $query = "SELECT * FROM clients WHERE email = '{$email}'";
+                $result = mysqli_query($conn, $query);
 
-                        session_regenerate_id(true);
-                        header("Location: index.php?loginSuccess");
-                        exit();
+                if ($result) {
+                    $row = mysqli_fetch_assoc($result);
+                    if ($row) {
+                        if (password_verify($password, $row['password'])) {
+                            $_SESSION['user_id'] = $row["client_id"];
+                            $_SESSION['user_firstname'] = $row['firstName'];
+                            $_SESSION['user_lastname'] = $row['lastName'];
+                            $_SESSION['user_phone'] = $row['phone'];
+                            $_SESSION['user_email'] = $row['email'];
+                            $_SESSION['user_role'] = $row['role'];
+
+                            session_regenerate_id(true);
+                            header("Location: index.php?loginSuccess");
+                            exit();
+                        } else {
+                            header("Location: sign-in.php?loginFailed");
+                            exit();
+                        }
                     } else {
                         header("Location: sign-in.php?loginFailed");
                         exit();
@@ -137,9 +145,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     header("Location: sign-in.php?loginFailed");
                     exit();
                 }
-            } else {
-                header("Location: sign-in.php?loginFailed");
-                exit();
             }
         }
     }
