@@ -1,5 +1,4 @@
 <?php include_once("./includes/templates/header.php") ?>
-<?php include("functions.php"); ?>
 
 <?php
 if (isset($_GET['success'])) {

@@ -60,12 +60,6 @@ function confirmQuery($result)
     return true;
 }
 
-
-
-
-
-
-
 // Register Logic
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if (isset($_POST['register'])) {
@@ -103,8 +97,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 }
 
 // Login Logic
-
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['login'])) {
         if (!empty($_POST['email']) && !empty($_POST['password'])) {
@@ -149,9 +141,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 }
-
-
-
 
 // Create A Reservation
 if (isset($_POST['reservation'])) {

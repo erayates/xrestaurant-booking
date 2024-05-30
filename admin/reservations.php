@@ -1,7 +1,4 @@
 <?php include_once("includes/templates/header.php") ?>
-
-
-
 <div id="wrapper">
     <?php include("includes/templates/navigation.php") ?>
     <div id="page-wrapper">

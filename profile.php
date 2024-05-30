@@ -208,11 +208,6 @@ if (isset($_GET['updateSuccess'])) {
   </div>";
         }
         ?>
-
-
-
-
-
         <form method="POST" action="" enctype="multipart/form-data" class="mt-3">
             <div class="form-group">
                 <label for="user_firstname">Firstname:</label>
@@ -241,7 +236,7 @@ if (isset($_GET['updateSuccess'])) {
         </form>
 
     </div>
-    <div class="col-xs-12 mt-5" style="overflow-x: auto;">
+    <div class="col-12 mt-5" style="overflow-x: auto;">
         <h1 class="page-header">
             Your Reservations
         </h1>
